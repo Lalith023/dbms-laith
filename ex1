@@ -1,86 +1,92 @@
-mysql> create database student;
-ERROR 1007 (HY000): Can't create database 'student'; database exists
-mysql> use student;
-Database changed
-mysql> create table student(Regno int(3),name varchar(15),gender varchar(1),dob DATE,mobileno int(10),city varchar(15));
-Query OK, 0 rows affected (0.05 sec)
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| cstudent           |
+| cstudents          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| student            |
+| students           |
+| sys                |
++--------------------+
+8 rows in set (0.00 sec)
 
-mysql> desc student;
+mysql> use cstudents;
+Database changed
+mysql> create table cstudents(regno int(3),name varchar(15),gender varchar(1),dob date,mobileno int(10),city varchar(15));
+Query OK, 0 rows affected, 2 warnings (0.02 sec)
+
+mysql> desc cstudents;
 +----------+-------------+------+-----+---------+-------+
 | Field    | Type        | Null | Key | Default | Extra |
 +----------+-------------+------+-----+---------+-------+
-| Regno    | int(3)      | YES  |     | NULL    |       |
+| regno    | int         | YES  |     | NULL    |       |
 | name     | varchar(15) | YES  |     | NULL    |       |
 | gender   | varchar(1)  | YES  |     | NULL    |       |
 | dob      | date        | YES  |     | NULL    |       |
-| mobileno | int(10)     | YES  |     | NULL    |       |
+| mobileno | int         | YES  |     | NULL    |       |
 | city     | varchar(15) | YES  |     | NULL    |       |
 +----------+-------------+------+-----+---------+-------+
-6 rows in set (0.03 sec)
-mysql> ALTER TABLE student
-    -> ADD emis int(30);
-Query OK, 0 rows affected (0.08 sec)
+6 rows in set (0.00 sec)
+
+mysql> alter table cstudents
+    -> ADD department varchar(25);
+Query OK, 0 rows affected (0.01 sec)
 Records: 0  Duplicates: 0  Warnings: 0
 
-mysql> ALTER TABLE student
-    -> DROP COLOUMN city;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'city' at line 2
-mysql> ALTER TABLE student
+mysql> alter table cstudents
     -> DROP COLUMN city;
-Query OK, 0 rows affected (0.05 sec)
+Query OK, 0 rows affected (0.01 sec)
 Records: 0  Duplicates: 0  Warnings: 0
 
-mysql> TRUNCATE TABLE student;
-Query OK, 0 rows affected (0.02 sec)
+mysql> desc cstudents;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| regno      | int         | YES  |     | NULL    |       |
+| name       | varchar(15) | YES  |     | NULL    |       |
+| gender     | varchar(1)  | YES  |     | NULL    |       |
+| dob        | date        | YES  |     | NULL    |       |
+| mobileno   | int         | YES  |     | NULL    |       |
+| department | varchar(25) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
 
-mysql> desc student;
-+----------+-------------+------+-----+---------+-------+
-| Field    | Type        | Null | Key | Default | Extra |
-+----------+-------------+------+-----+---------+-------+
-| Regno    | int(3)      | YES  |     | NULL    |       |
-| name     | varchar(15) | YES  |     | NULL    |       |
-| gender   | varchar(1)  | YES  |     | NULL    |       |
-| dob      | date        | YES  |     | NULL    |       |
-| mobileno | int(10)     | YES  |     | NULL    |       |
-| emis     | int(30)     | YES  |     | NULL    |       |
-+----------+-------------+------+-----+---------+-------+
-6 rows in set (0.03 sec)
+mysql> TRUNCATE table cstudents;
+Query OK, 0 rows affected (0.03 sec)
 
-mysql> ALTER TABLE student
-    -> TRUNCATE TABLE student;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TABLE student' at line 2
-mysql> ALTER TABLE student
-    -> SELECT * FROM student;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM student' at line 2
-mysql> SELECT * FROM student;
+mysql> SELECT * from cstudents;
 Empty set (0.00 sec)
 
-mysql> desc student;
-+----------+-------------+------+-----+---------+-------+
-| Field    | Type        | Null | Key | Default | Extra |
-+----------+-------------+------+-----+---------+-------+
-| Regno    | int(3)      | YES  |     | NULL    |       |
-| name     | varchar(15) | YES  |     | NULL    |       |
-| gender   | varchar(1)  | YES  |     | NULL    |       |
-| dob      | date        | YES  |     | NULL    |       |
-| mobileno | int(10)     | YES  |     | NULL    |       |
-| emis     | int(30)     | YES  |     | NULL    |       |
-+----------+-------------+------+-----+---------+-------+
-6 rows in set (0.03 sec)
-mysql> insert into student values ('1234','KEERTHANAA','F','2005-05-29','944565599','26346282');
-Query OK, 1 row affected (0.00 sec)
+mysql> desc cstudents;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| regno      | int         | YES  |     | NULL    |       |
+| name       | varchar(15) | YES  |     | NULL    |       |
+| gender     | varchar(1)  | YES  |     | NULL    |       |
+| dob        | date        | YES  |     | NULL    |       |
+| mobileno   | int         | YES  |     | NULL    |       |
+| department | varchar(25) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+mysql> insert into the student values('234','Hansika','female','09-08-2004','7729804910','CSE');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'student values('234','Hansika','female','09-08-2004','7729804910','CSE')' at line 1
+mysql> insert into cstudents values('234','Hansika','F','09-08-2004','7729804910','cse');
+ERROR 1292 (22007): Incorrect date value: '09-08-2004' for column 'dob' at row 1
+mysql> insert into student values ('234','Hansika','F','2004-09-08','7729804910','cse');
+ERROR 1146 (42S02): Table 'cstudents.student' doesn't exist
+mysql> insert into cstudents values('234','Hansika','F','2004-09-08','7729804910','cse');
+ERROR 1264 (22003): Out of range value for column 'mobileno' at row 1
+mysql> insert into cstudents values('234','Hansika','F','2004-09-08','7729804','cse');
+Query OK, 1 row affected (0.01 sec)
 
-mysql> desc sudent;
-ERROR 1146 (42S02): Table 'student.sudent' doesn't exist
-mysql> desc student;
-+----------+-------------+------+-----+---------+-------+
-| Field    | Type        | Null | Key | Default | Extra |
-+----------+-------------+------+-----+---------+-------+
-| Regno    | int(3)      | YES  |     | NULL    |       |
-| name     | varchar(15) | YES  |     | NULL    |       |
-| gender   | varchar(1)  | YES  |     | NULL    |       |
-| dob      | date        | YES  |     | NULL    |       |
-| mobileno | int(10)     | YES  |     | NULL    |       |
-| emis     | int(30)     | YES  |     | NULL    |       |
-+----------+-------------+------+-----+---------+-------+
-6 rows in set (0.03 sec)
+mysql> SELECT * from cstudents;
++-------+---------+--------+------------+----------+------------+
+| regno | name    | gender | dob        | mobileno | department |
++-------+---------+--------+------------+----------+------------+
+|   234 | Hansika | F      | 2004-09-08 |  7729804 | cse        |
++-------+---------+--------+------------+----------+------------+
+1 row in set (0.00 sec)
