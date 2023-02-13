@@ -1,29 +1,89 @@
-mysql> use student;
+mysql> use faculty;
 Database changed
-mysql> select * from student;
-+-------+------------+--------+------------+-----------+----------+
-| Regno | name       | gender | dob        | mobileno  | emis     |
-+-------+------------+--------+------------+-----------+----------+
-|  1234 | KEERTHANAA | F      | 2005-05-29 | 944565599 | 26346282 |
-|  7349 | VIGNESH    | M      | 2010-09-13 |  92738362 |  6363563 |
-+-------+------------+--------+------------+-----------+----------+
+mysql> desc faculty;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Facno    | varchar(4)  | NO   | PRI |         |       |
+| facname  | varchar(15) | YES  |     | NULL    |       |
+| gender   | char(1)     | YES  |     | NULL    |       |
+| DOB      | date        | YES  |     | NULL    |       |
+| DOJ      | date        | YES  |     | NULL    |       |
+| Mobileno | int(10)     | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+
+mysql> insert into faculty values ('123','santhosh','M','2004-03-21','2023-01-25','122344456');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select 8
+    -> select * form faculty;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select * form faculty' at line 2
+mysql> select * from faculty;
++-------+----------+--------+------------+------------+-----------+
+| Facno | facname  | gender | DOB        | DOJ        | Mobileno  |
++-------+----------+--------+------------+------------+-----------+
+| 123   | santhosh | M      | 2004-03-21 | 2023-01-25 | 122344456 |
+| 234   | santhosh | M      | 2004-03-21 | 2023-01-25 | 293348483 |
++-------+----------+--------+------------+------------+-----------+
 2 rows in set (0.00 sec)
 
-mysql> INSERT INTO student values ('9999','SURESHKUMAR','M','1976-12-18','944458999','87465839');
-Query OK, 1 row affected (0.01 sec)
+mysql> update faculty set Facno='234' where facname='sid'
+    -> ;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
 
-mysql> INSERT INTO student values ('9999','NAGALAXMI','F','1980-04-05','944411718','76579543');
-ERROR 1062 (23000): Duplicate entry '9999' for key 'PRIMARY'
-mysql> INSERT INTO student values ('7189','NAGALAXMI','F','1980-04-05','944411718','76579543');
-Query OK, 1 row affected (0.00 sec)
+mysql> select * form faculty;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'form faculty' at line 1
+mysql> select * from faculty;
++-------+----------+--------+------------+------------+-----------+
+| Facno | facname  | gender | DOB        | DOJ        | Mobileno  |
++-------+----------+--------+------------+------------+-----------+
+| 123   | santhosh | M      | 2004-03-21 | 2023-01-25 | 122344456 |
+| 234   | santhosh | M      | 2004-03-21 | 2023-01-25 | 293348483 |
++-------+----------+--------+------------+------------+-----------+
+2 rows in set (0.00 sec)
 
-mysql> select * from student;
-+-------+-------------+--------+------------+-----------+----------+
-| Regno | name        | gender | dob        | mobileno  | emis     |
-+-------+-------------+--------+------------+-----------+----------+
-|  1234 | KEERTHANAA  | F      | 2005-05-29 | 944565599 | 26346282 |
-|  7189 | NAGALAXMI   | F      | 1980-04-05 | 944411718 | 76579543 |
-|  7349 | VIGNESH     | M      | 2010-09-13 |  92738362 |  6363563 |
-|  9999 | SURESHKUMAR | M      | 1976-12-18 | 944458999 | 87465839 |
-+-------+-------------+--------+------------+-----------+----------+
-4 rows in set (0.00 sec)
+mysql> update faculty set facname='sid' where Facno='234';
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from faculty;
++-------+----------+--------+------------+------------+-----------+
+| Facno | facname  | gender | DOB        | DOJ        | Mobileno  |
++-------+----------+--------+------------+------------+-----------+
+| 123   | santhosh | M      | 2004-03-21 | 2023-01-25 | 122344456 |
+| 234   | sid      | M      | 2004-03-21 | 2023-01-25 | 293348483 |
++-------+----------+--------+------------+------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> insert into faculty values('456','keerthana','F','2005-05-29','2024-05-20','323255448';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> insert into faculty values('456','keerthana','F','2005-05-29','2024-05-20','323255448');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from faculty;
++-------+-----------+--------+------------+------------+-----------+
+| Facno | facname   | gender | DOB        | DOJ        | Mobileno  |
++-------+-----------+--------+------------+------------+-----------+
+| 123   | santhosh  | M      | 2004-03-21 | 2023-01-25 | 122344456 |
+| 234   | sid       | M      | 2004-03-21 | 2023-01-25 | 293348483 |
+| 456   | keerthana | F      | 2005-05-29 | 2024-05-20 | 323255448 |
++-------+-----------+--------+------------+------------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> delete form faculty where facname='santhosh';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'faculty where facname='santhosh'' at line 1
+mysql> delete from faculty where facname='santhosh';
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from faculty;
++-------+-----------+--------+------------+------------+-----------+
+| Facno | facname   | gender | DOB        | DOJ        | Mobileno  |
++-------+-----------+--------+------------+------------+-----------+
+| 234   | sid       | M      | 2004-03-21 | 2023-01-25 | 293348483 |
+| 456   | keerthana | F      | 2005-05-29 | 2024-05-20 | 323255448 |
++-------+-----------+--------+------------+------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql>
