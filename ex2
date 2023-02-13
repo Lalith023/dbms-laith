@@ -1,268 +1,73 @@
-mysql> use data;
+)mysql> use faculty;
 Database changed
-mysql> Alter table Data;
-Query OK, 0 rows affected (0.00 sec)
-
-mysql> desc Data;
+mysql> desc faculty;
 +----------+-------------+------+-----+---------+-------+
 | Field    | Type        | Null | Key | Default | Extra |
 +----------+-------------+------+-----+---------+-------+
-| Regno    | int(5)      | NO   | PRI | 0       |       |
-| Name     | varchar(40) | YES  |     | NULL    |       |
-| Gender   | varchar(4)  | YES  |     | NULL    |       |
-| DOB      | int(34)     | YES  |     | NULL    |       |
-| Mobileno | int(50)     | YES  |     | NULL    |       |
-| City     | varchar(20) | YES  |     | NULL    |       |
+| Facno    | varchar(4)  | NO   | PRI |         |       |
+| facname  | varchar(15) | YES  |     | NULL    |       |
+| gender   | char(1)     | YES  |     | NULL    |       |
+| DOB      | date        | YES  |     | NULL    |       |
+| DOJ      | date        | YES  |     | NULL    |       |
+| Mobileno | int(10)     | YES  |     | NULL    |       |
 +----------+-------------+------+-----+---------+-------+
-6 rows in set (0.01 sec)
+6 rows in set (0.03 sec)
 
-mysql> use Student;
-Database changed
-mysql> ALTER table Student;
-Query OK, 0 rows affected (0.00 sec)
+mysql> alter table clg
+    -> modify Mobileno int(10) primary key;
+ERROR 1146 (42S02): Table 'faculty.clg' doesn't exist
+mysql> alter table faculty
+    -> modify Mobileno int(10) primary key;
+ERROR 1068 (42000): Multiple primary key defined
+mysql> desc faculty
+    -> ;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Facno    | varchar(4)  | NO   | PRI |         |       |
+| facname  | varchar(15) | YES  |     | NULL    |       |
+| gender   | char(1)     | YES  |     | NULL    |       |
+| DOB      | date        | YES  |     | NULL    |       |
+| DOJ      | date        | YES  |     | NULL    |       |
+| Mobileno | int(10)     | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+6 rows in set (0.03 sec)
+mysql> alter table faculty
+    -> add check (gender='M' OR 'F');
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+mysql> desc class;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| reg     | int(7)      | NO   | PRI | 0       |       |
+| teacher | varchar(10) | YES  |     | NULL    |       |
+| year    | int(8)      | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
 
-mysql> desc Student;
-+--------------+-------------+------+-----+---------+-------+
-| Field        | Type        | Null | Key | Default | Extra |
-+--------------+-------------+------+-----+---------+-------+
-| Regno        | int(3)      | YES  |     | NULL    |       |
-| Studentname  | varchar(15) | YES  |     | NULL    |       |
-| Gender       | char(1)     | YES  |     | NULL    |       |
-| dateofbirth  | date        | YES  |     | NULL    |       |
-| Mobilenumber | int(10)     | YES  |     | NULL    |       |
-| City         | varchar(15) | YES  |     | NULL    |       |
-+--------------+-------------+------+-----+---------+-------+
-6 rows in set (0.01 sec)
+mysql> desc stud;
++-------+------------+------+-----+---------+-------+
+| Field | Type       | Null | Key | Default | Extra |
++-------+------------+------+-----+---------+-------+
+| name  | varchar(7) | YES  |     | NULL    |       |
+| reg   | int(8)     | YES  |     | NULL    |       |
++-------+------------+------+-----+---------+-------+
+2 rows in set (0.02 sec)
 
-mysql>  alter table Student
-    -> add primary key(studentname);
-Query OK, 0 rows affected (0.02 sec)
+mysql> alter table stud foreign key (reg) references class (reg);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key (reg) references class (reg)' at line 1
+mysql> alter table stud add foreign key (reg) references class (reg);
+Query OK, 0 rows affected (0.11 sec)
 Records: 0  Duplicates: 0  Warnings: 0
 
-mysql> desc Student;
-+--------------+-------------+------+-----+---------+-------+
-| Field        | Type        | Null | Key | Default | Extra |
-+--------------+-------------+------+-----+---------+-------+
-| Regno        | int(3)      | YES  |     | NULL    |       |
-| Studentname  | varchar(15) | NO   | PRI |         |       |
-| Gender       | char(1)     | YES  |     | NULL    |       |
-| dateofbirth  | date        | YES  |     | NULL    |       |
-| Mobilenumber | int(10)     | YES  |     | NULL    |       |
-| City         | varchar(15) | YES  |     | NULL    |       |
-+--------------+-------------+------+-----+---------+-------+
-6 rows in set (0.01 sec)
+mysql> desc stud;
++-------+------------+------+-----+---------+-------+
+| Field | Type       | Null | Key | Default | Extra |
++-------+------------+------+-----+---------+-------+
+| name  | varchar(7) | YES  |     | NULL    |       |
+| reg   | int(8)     | YES  | MUL | NULL    |       |
++-------+------------+------+-----+---------+-------+
+2 rows in set (0.02 sec)
 
-mysql> use data;
-Database changed
-mysql> alter table Data
-    ->
-    -> create table Doctor;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'create table Doctor' at line 3
-mysql>  create table doctor (patient_ID int(9), name varchar(20));
-Query OK, 0 rows affected (0.01 sec)
-
-mysql> desc Doctor;
-+------------+-------------+------+-----+---------+-------+
-| Field      | Type        | Null | Key | Default | Extra |
-+------------+-------------+------+-----+---------+-------+
-| patient_ID | int(9)      | YES  |     | NULL    |       |
-| name       | varchar(20) | YES  |     | NULL    |       |
-+------------+-------------+------+-----+---------+-------+
-2 rows in set (0.01 sec)
-     > alter table doctor add foreign key (patient_ID) references hospital (ID)
-mysql> alter table Doctor add foreign key (patient_ID) references Data(city);
-ERROR 1005 (HY000): Can't create table 'data.#sql-1050_14' (errno: 150)
 mysql>
-Enter password: *********
-Welcome to the MySQL monitor.  Commands end with ; or \g.
-Your MySQL connection id is 20
-Server version: 5.5.62 MySQL Community Server (GPL)
-
-Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
-Oracle is a registered trademark of Oracle Corporation and/or its
-affiliates. Other names may be trademarks of their respective
-owners.
-
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-
-mysql> use data;
-Database changed
-mysql> Alter table Data;
-Query OK, 0 rows affected (0.00 sec)
-
-mysql> desc Data;
-+----------+-------------+------+-----+---------+-------+
-| Field    | Type        | Null | Key | Default | Extra |
-+----------+-------------+------+-----+---------+-------+
-| Regno    | int(5)      | NO   | PRI | 0       |       |
-| Name     | varchar(40) | YES  |     | NULL    |       |
-| Gender   | varchar(4)  | YES  |     | NULL    |       |
-| DOB      | int(34)     | YES  |     | NULL    |       |
-| Mobileno | int(50)     | YES  |     | NULL    |       |
-| City     | varchar(20) | YES  |     | NULL    |       |
-+----------+-------------+------+-----+---------+-------+
-6 rows in set (0.01 sec)
-
-mysql> use Student;
-Database changed
-mysql> ALTER table Student;
-Query OK, 0 rows affected (0.00 sec)
-
-mysql> desc Student;
-+--------------+-------------+------+-----+---------+-------+
-| Field        | Type        | Null | Key | Default | Extra |
-+--------------+-------------+------+-----+---------+-------+
-| Regno        | int(3)      | YES  |     | NULL    |       |
-| Studentname  | varchar(15) | YES  |     | NULL    |       |
-| Gender       | char(1)     | YES  |     | NULL    |       |
-| dateofbirth  | date        | YES  |     | NULL    |       |
-| Mobilenumber | int(10)     | YES  |     | NULL    |       |
-| City         | varchar(15) | YES  |     | NULL    |       |
-+--------------+-------------+------+-----+---------+-------+
-6 rows in set (0.01 sec)
-
-mysql>  alter table Student
-    -> add primary key(studentname);
-Query OK, 0 rows affected (0.02 sec)
-Records: 0  Duplicates: 0  Warnings: 0
-
-mysql> desc Student;
-+--------------+-------------+------+-----+---------+-------+
-| Field        | Type        | Null | Key | Default | Extra |
-+--------------+-------------+------+-----+---------+-------+
-| Regno        | int(3)      | YES  |     | NULL    |       |
-| Studentname  | varchar(15) | NO   | PRI |         |       |
-| Gender       | char(1)     | YES  |     | NULL    |       |
-| dateofbirth  | date        | YES  |     | NULL    |       |
-| Mobilenumber | int(10)     | YES  |     | NULL    |       |
-| City         | varchar(15) | YES  |     | NULL    |       |
-+--------------+-------------+------+-----+---------+-------+
-6 rows in set (0.01 sec)
-
-mysql> use data;
-Database changed
-mysql> alter table Data
-    ->
-    -> create table Doctor;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'create table Doctor' at line 3
-mysql>  create table doctor (patient_ID int(9), name varchar(20));
-Query OK, 0 rows affected (0.01 sec)
-
-mysql> desc Doctor;
-+------------+-------------+------+-----+---------+-------+
-| Field      | Type        | Null | Key | Default | Extra |
-+------------+-------------+------+-----+---------+-------+
-| patient_ID | int(9)      | YES  |     | NULL    |       |
-| name       | varchar(20) | YES  |     | NULL    |       |
-+------------+-------------+------+-----+---------+-------+
-2 rows in set (0.01 sec)
-     > alter table doctor add foreign key (patient_ID) references hospital (ID)
-mysql> alter table Doctor add foreign key (patient_ID) references Data(city);
-ERROR 1005 (HY000): Can't create table 'data.#sql-1050_14' (errno: 150)
-mysql>
-mysql> use data;
-Database changed
-mysql> Alter table Data;
-Query OK, 0 rows affected (0.00 sec)
-
-mysql> desc Data;
-+----------+-------------+------+-----+---------+-------+
-| Field    | Type        | Null | Key | Default | Extra |
-+----------+-------------+------+-----+---------+-------+
-| Regno    | int(5)      | NO   | PRI | 0       |       |
-| Name     | varchar(40) | YES  |     | NULL    |       |
-| Gender   | varchar(4)  | YES  |     | NULL    |       |
-| DOB      | int(34)     | YES  |     | NULL    |       |
-| Mobileno | int(50)     | YES  |     | NULL    |       |
-| City     | varchar(20) | YES  |     | NULL    |       |
-+----------+-------------+------+-----+---------+-------+
-6 rows in set (0.01 sec)
-
-mysql> use Student;
-Database changed
-mysql> ALTER table Student;
-Query OK, 0 rows affected (0.00 sec)
-
-mysql> desc Student;
-+--------------+-------------+------+-----+---------+-------+
-| Field        | Type        | Null | Key | Default | Extra |
-+--------------+-------------+------+-----+---------+-------+
-| Regno        | int(3)      | YES  |     | NULL    |       |
-| Studentname  | varchar(15) | YES  |     | NULL    |       |
-| Gender       | char(1)     | YES  |     | NULL    |       |
-| dateofbirth  | date        | YES  |     | NULL    |       |
-| Mobilenumber | int(10)     | YES  |     | NULL    |       |
-| City         | varchar(15) | YES  |     | NULL    |       |
-+--------------+-------------+------+-----+---------+-------+
-6 rows in set (0.01 sec)
-
-mysql>  alter table Student
-    -> add primary key(studentname);
-Query OK, 0 rows affected (0.02 sec)
-Records: 0  Duplicates: 0  Warnings: 0
-
-mysql> desc Student;
-+--------------+-------------+------+-----+---------+-------+
-| Field        | Type        | Null | Key | Default | Extra |
-+--------------+-------------+------+-----+---------+-------+
-| Regno        | int(3)      | YES  |     | NULL    |       |
-| Studentname  | varchar(15) | NO   | PRI |         |       |
-| Gender       | char(1)     | YES  |     | NULL    |       |
-| dateofbirth  | date        | YES  |     | NULL    |       |
-| Mobilenumber | int(10)     | YES  |     | NULL    |       |
-| City         | varchar(15) | YES  |     | NULL    |       |
-+--------------+-------------+------+-----+---------+-------+
-6 rows in set (0.01 sec)
-mysql> use hospital;
-Database changed
-mysql> desc hospital;
-+-------+-------------+------+-----+---------+-------+
-| Field | Type        | Null | Key | Default | Extra |
-+-------+-------------+------+-----+---------+-------+
-| ID    | int(9)      | NO   | PRI | 0       |       |
-| name  | varchar(20) | YES  |     | NULL    |       |
-+-------+-------------+------+-----+---------+-------+
-2 rows in set (0.01 sec)
-
-mysql> create table doctor (patient_ID int(9), name varchar(20));
-Query OK, 0 rows affected (0.01 sec)
-
-mysql> desc doctor;
-+------------+-------------+------+-----+---------+-------+
-| Field      | Type        | Null | Key | Default | Extra |
-+------------+-------------+------+-----+---------+-------+
-| patient_ID | int(9)      | YES  |     | NULL    |       |
-| name       | varchar(20) | YES  |     | NULL    |       |
-+------------+-------------+------+-----+---------+-------+
-2 rows in set (0.01 sec)
-
-mysql> alter table doctor add foreign key (patient_ID) references hospital (ID);
-Query OK, 0 rows affected (0.01 sec)
-Records: 0  Duplicates: 0  Warnings: 0
-
-mysql> desc hospital;
-+-------+-------------+------+-----+---------+-------+
-| Field | Type        | Null | Key | Default | Extra |
-+-------+-------------+------+-----+---------+-------+
-| ID    | int(9)      | NO   | PRI | 0       |       |
-| name  | varchar(20) | YES  |     | NULL    |       |
-+-------+-------------+------+-----+---------+-------+
-2 rows in set (0.00 sec)
-
-mysql> desc hospital;
-+-------+-------------+------+-----+---------+-------+
-| Field | Type        | Null | Key | Default | Extra |
-+-------+-------------+------+-----+---------+-------+
-| ID    | int(9)      | NO   | PRI | 0       |       |
-| name  | varchar(20) | YES  |     | NULL    |       |
-+-------+-------------+------+-----+---------+-------+
-2 rows in set (0.01 sec)
-
-mysql> desc doctor;
-+------------+-------------+------+-----+---------+-------+
-| Field      | Type        | Null | Key | Default | Extra |
-+------------+-------------+------+-----+---------+-------+
-| patient_ID | int(9)      | YES  | MUL | NULL    |       |
-| name       | varchar(20) | YES  |     | NULL    |       |
-+------------+-------------+------+-----+---------+-------+
-2 rows in set (0.01 sec)
