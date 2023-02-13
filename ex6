@@ -1,76 +1,108 @@
-mysql> use student;
+mysql> use students;
 Database changed
-mysql> select * from student;
-+-------+------------+--------+------------+-----------+----------+
-| Regno | name       | gender | dob        | mobileno  | emis     |
-+-------+------------+--------+------------+-----------+----------+
-|  1234 | KEERTHANAA | F      | 2005-05-29 | 944565599 | 26346282 |
-|  7349 | VIGNESH    | M      | 2010-09-13 |  92738362 |  6363563 |
-+-------+------------+--------+------------+-----------+----------+
-2 rows in set (0.00 sec)
-
-mysql> INSERT INTO student values ('9999','SURESHKUMAR','M','1976-12-18','944458999','87465839');
-Query OK, 1 row affected (0.01 sec)
-
-mysql> INSERT INTO student values ('9999','NAGALAXMI','F','1980-04-05','944411718','76579543');
-ERROR 1062 (23000): Duplicate entry '9999' for key 'PRIMARY'
-mysql> INSERT INTO student values ('7189','NAGALAXMI','F','1980-04-05','944411718','76579543');
-Query OK, 1 row affected (0.00 sec)
-
-mysql> select * from student;
-+-------+-------------+--------+------------+-----------+----------+
-| Regno | name        | gender | dob        | mobileno  | emis     |
-+-------+-------------+--------+------------+-----------+----------+
-|  1234 | KEERTHANAA  | F      | 2005-05-29 | 944565599 | 26346282 |
-|  7189 | NAGALAXMI   | F      | 1980-04-05 | 944411718 | 76579543 |
-|  7349 | VIGNESH     | M      | 2010-09-13 |  92738362 |  6363563 |
-|  9999 | SURESHKUMAR | M      | 1976-12-18 | 944458999 | 87465839 |
-+-------+-------------+--------+------------+-----------+----------+
+mysql> select * from students;
++-------+-----------+------------+-----------+----------+
+| Regno | name      | DOB        | mobileno  | bloodgrp |
++-------+-----------+------------+-----------+----------+
+|  5959 | santhosh  | 2004-03-21 | 293344959 | B+ve     |
+|  8484 | saravanan | 2005-01-01 | 483509309 | A+ve     |
+|  9593 | vijay     | 2004-06-10 | 490905037 | O+ve     |
+|  7594 | tamil     | 2004-12-13 |  80349445 | AB+ve    |
++-------+-----------+------------+-----------+----------+
 4 rows in set (0.00 sec)
-mysql> INSERT INTO student values ('8659','RIYA','M','19807-08-02','7832538','656367');
-ERROR 1292 (22007): Incorrect date value: '19807-08-02' for column 'dob' at row 1
-mysql> INSERT INTO student values ('8659','RIYA','M','1987-08-02','7832538','656367');
-Query OK, 1 row affected (0.00 sec)
 
-mysql> select * from student;
-+-------+-------------+--------+------------+-----------+----------+
-| Regno | name        | gender | dob        | mobileno  | emis     |
-+-------+-------------+--------+------------+-----------+----------+
-|  1234 | KEERTHANAA  | F      | 2005-05-29 | 944565599 | 26346282 |
-|  7189 | NAGALAXMI   | F      | 1980-04-05 | 944411718 | 76579543 |
-|  7349 | VIGNESH     | M      | 2010-09-13 |  92738362 |  6363563 |
-|  8659 | RIYA        | M      | 1987-08-02 |   7832538 |   656367 |
-|  9999 | SURESHKUMAR | M      | 1976-12-18 | 944458999 | 87465839 |
-+-------+-------------+--------+------------+-----------+----------+
-5 rows in set (0.00 sec)
+mysql> select count(name) from students;
++-------------+
+| count(name) |
++-------------+
+|           4 |
++-------------+
+1 row in set (0.00 sec)
 
-mysql> update student
-    -> set regno=7654 where name='RIYA';
-Query OK, 1 row affected (0.01 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
+mysql> select count(Regno) from students
+    -> ;
++--------------+
+| count(Regno) |
++--------------+
+|            4 |
++--------------+
+1 row in set (0.01 sec)
 
-mysql> select * from student;
-+-------+-------------+--------+------------+-----------+----------+
-| Regno | name        | gender | dob        | mobileno  | emis     |
-+-------+-------------+--------+------------+-----------+----------+
-|  1234 | KEERTHANAA  | F      | 2005-05-29 | 944565599 | 26346282 |
-|  7189 | NAGALAXMI   | F      | 1980-04-05 | 944411718 | 76579543 |
-|  7349 | VIGNESH     | M      | 2010-09-13 |  92738362 |  6363563 |
-|  7654 | RIYA        | M      | 1987-08-02 |   7832538 |   656367 |
-|  9999 | SURESHKUMAR | M      | 1976-12-18 | 944458999 | 87465839 |
-+-------+-------------+--------+------------+-----------+----------+
-5 rows in set (0.00 sec)
+mysql> select count(name) from students
+    -> ;
++-------------+
+| count(name) |
++-------------+
+|           4 |
++-------------+
+1 row in set (0.00 sec)
 
-mysql> delete from student where name='RIYA';
-Query OK, 1 row affected (0.00 sec)
+mysql> select count(name),Regno from students
+    -> group by Regno having count(name)>0;
++-------------+-------+
+| count(name) | Regno |
++-------------+-------+
+|           1 |  5959 |
+|           1 |  7594 |
+|           1 |  8484 |
+|           1 |  9593 |
++-------------+-------+
+4 rows in set (0.06 sec)
 
-mysql> select * from student;
-+-------+-------------+--------+------------+-----------+----------+
-| Regno | name        | gender | dob        | mobileno  | emis     |
-+-------+-------------+--------+------------+-----------+----------+
-|  1234 | KEERTHANAA  | F      | 2005-05-29 | 944565599 | 26346282 |
-|  7189 | NAGALAXMI   | F      | 1980-04-05 | 944411718 | 76579543 |
-|  7349 | VIGNESH     | M      | 2010-09-13 |  92738362 |  6363563 |
-|  9999 | SURESHKUMAR | M      | 1976-12-18 | 944458999 | 87465839 |
-+-------+-------------+--------+------------+-----------+----------+
+mysql> select name,Regno from students
+    -> group by Regno having count(name)>0;
++-----------+-------+
+| name      | Regno |
++-----------+-------+
+| santhosh  |  5959 |
+| tamil     |  7594 |
+| saravanan |  8484 |
+| vijay     |  9593 |
++-----------+-------+
 4 rows in set (0.00 sec)
+
+mysql> select 9593 from students;
++------+
+| 9593 |
++------+
+| 9593 |
+| 9593 |
+| 9593 |
+| 9593 |
++------+
+4 rows in set (0.00 sec)
+
+mysql> select Regno,9593 from students;
++-------+------+
+| Regno | 9593 |
++-------+------+
+|  5959 | 9593 |
+|  8484 | 9593 |
+|  9593 | 9593 |
+|  7594 | 9593 |
++-------+------+
+4 rows in set (0.00 sec)
+
+mysql> select Regno,name from students;
++-------+-----------+
+| Regno | name      |
++-------+-----------+
+|  5959 | santhosh  |
+|  8484 | saravanan |
+|  9593 | vijay     |
+|  7594 | tamil     |
++-------+-----------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql> select * from students where Regno in 5959;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '5959' at line 1
+mysql> select * from students where Regno in (5959);
++-------+----------+------------+-----------+----------+
+| Regno | name     | DOB        | mobileno  | bloodgrp |
++-------+----------+------------+-----------+----------+
+|  5959 | santhosh | 2004-03-21 | 293344959 | B+ve     |
++-------+----------+------------+-----------+----------+
+1 row in set (0.00 sec)
+
+mysql>
