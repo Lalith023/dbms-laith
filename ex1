@@ -1,92 +1,62 @@
-mysql> show databases;
-+--------------------+
-| Database           |
-+--------------------+
-| cstudent           |
-| cstudents          |
-| information_schema |
-| mysql              |
-| performance_schema |
-| student            |
-| students           |
-| sys                |
-+--------------------+
-8 rows in set (0.00 sec)
-
-mysql> use cstudents;
+mysql> use Faculty;
 Database changed
-mysql> create table cstudents(regno int(3),name varchar(15),gender varchar(1),dob date,mobileno int(10),city varchar(15));
-Query OK, 0 rows affected, 2 warnings (0.02 sec)
+mysql> create table Faculty(Facultynumber varchar(4),Facultyname varchar(15),Gender char(1),dateofbirth DATE,Dateofjoin DATE,Mobilenumber int(10));
+Query OK, 0 rows affected (0.01 sec)
 
-mysql> desc cstudents;
-+----------+-------------+------+-----+---------+-------+
-| Field    | Type        | Null | Key | Default | Extra |
-+----------+-------------+------+-----+---------+-------+
-| regno    | int         | YES  |     | NULL    |       |
-| name     | varchar(15) | YES  |     | NULL    |       |
-| gender   | varchar(1)  | YES  |     | NULL    |       |
-| dob      | date        | YES  |     | NULL    |       |
-| mobileno | int         | YES  |     | NULL    |       |
-| city     | varchar(15) | YES  |     | NULL    |       |
-+----------+-------------+------+-----+---------+-------+
-6 rows in set (0.00 sec)
+mysql> decc Faculty;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'decc Faculty' at line 1
+mysql> desc Faculty;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| Facultynumber | varchar(4)  | YES  |     | NULL    |       |
+| Facultyname   | varchar(15) | YES  |     | NULL    |       |
+| Gender        | char(1)     | YES  |     | NULL    |       |
+| dateofbirth   | date        | YES  |     | NULL    |       |
+| Dateofjoin    | date        | YES  |     | NULL    |       |
+| Mobilenumber  | int(10)     | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
 
-mysql> alter table cstudents
-    -> ADD department varchar(25);
+mysql> alter table Faculty ADD address varchar(50);
 Query OK, 0 rows affected (0.01 sec)
 Records: 0  Duplicates: 0  Warnings: 0
 
-mysql> alter table cstudents
-    -> DROP COLUMN city;
-Query OK, 0 rows affected (0.01 sec)
+mysql> desc Faculty;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| Facultynumber | varchar(4)  | YES  |     | NULL    |       |
+| Facultyname   | varchar(15) | YES  |     | NULL    |       |
+| Gender        | char(1)     | YES  |     | NULL    |       |
+| dateofbirth   | date        | YES  |     | NULL    |       |
+| Dateofjoin    | date        | YES  |     | NULL    |       |
+| Mobilenumber  | int(10)     | YES  |     | NULL    |       |
+| address       | varchar(50) | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> alter table Faculty
+    -> drop table address;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table address' at line 2
+mysql> alter table Faculty
+    -> drop column address;
+Query OK, 0 rows affected (0.02 sec)
 Records: 0  Duplicates: 0  Warnings: 0
 
-mysql> desc cstudents;
-+------------+-------------+------+-----+---------+-------+
-| Field      | Type        | Null | Key | Default | Extra |
-+------------+-------------+------+-----+---------+-------+
-| regno      | int         | YES  |     | NULL    |       |
-| name       | varchar(15) | YES  |     | NULL    |       |
-| gender     | varchar(1)  | YES  |     | NULL    |       |
-| dob        | date        | YES  |     | NULL    |       |
-| mobileno   | int         | YES  |     | NULL    |       |
-| department | varchar(25) | YES  |     | NULL    |       |
-+------------+-------------+------+-----+---------+-------+
-6 rows in set (0.00 sec)
+mysql> desc Faculty;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| Facultynumber | varchar(4)  | YES  |     | NULL    |       |
+| Facultyname   | varchar(15) | YES  |     | NULL    |       |
+| Gender        | char(1)     | YES  |     | NULL    |       |
+| dateofbirth   | date        | YES  |     | NULL    |       |
+| Dateofjoin    | date        | YES  |     | NULL    |       |
+| Mobilenumber  | int(10)     | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
 
-mysql> TRUNCATE table cstudents;
-Query OK, 0 rows affected (0.03 sec)
-
-mysql> SELECT * from cstudents;
-Empty set (0.00 sec)
-
-mysql> desc cstudents;
-+------------+-------------+------+-----+---------+-------+
-| Field      | Type        | Null | Key | Default | Extra |
-+------------+-------------+------+-----+---------+-------+
-| regno      | int         | YES  |     | NULL    |       |
-| name       | varchar(15) | YES  |     | NULL    |       |
-| gender     | varchar(1)  | YES  |     | NULL    |       |
-| dob        | date        | YES  |     | NULL    |       |
-| mobileno   | int         | YES  |     | NULL    |       |
-| department | varchar(25) | YES  |     | NULL    |       |
-+------------+-------------+------+-----+---------+-------+
-6 rows in set (0.00 sec)
-mysql> insert into the student values('234','Hansika','female','09-08-2004','7729804910','CSE');
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'student values('234','Hansika','female','09-08-2004','7729804910','CSE')' at line 1
-mysql> insert into cstudents values('234','Hansika','F','09-08-2004','7729804910','cse');
-ERROR 1292 (22007): Incorrect date value: '09-08-2004' for column 'dob' at row 1
-mysql> insert into student values ('234','Hansika','F','2004-09-08','7729804910','cse');
-ERROR 1146 (42S02): Table 'cstudents.student' doesn't exist
-mysql> insert into cstudents values('234','Hansika','F','2004-09-08','7729804910','cse');
-ERROR 1264 (22003): Out of range value for column 'mobileno' at row 1
-mysql> insert into cstudents values('234','Hansika','F','2004-09-08','7729804','cse');
-Query OK, 1 row affected (0.01 sec)
-
-mysql> SELECT * from cstudents;
-+-------+---------+--------+------------+----------+------------+
-| regno | name    | gender | dob        | mobileno | department |
-+-------+---------+--------+------------+----------+------------+
-|   234 | Hansika | F      | 2004-09-08 |  7729804 | cse        |
-+-------+---------+--------+------------+----------+------------+
-1 row in set (0.00 sec)
+mysql> drop column gender;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'column gender' at line 1
+mysql>
